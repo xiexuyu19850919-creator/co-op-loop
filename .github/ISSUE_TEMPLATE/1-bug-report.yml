@@ -1,0 +1,32 @@
+name: Bug report
+description: Report a reproducible behavior problem
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include credentials, cookies, private keys, local state, task IDs, or private paths.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which public candidate or version did you test?
+      placeholder: v0.2.0
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Give the smallest safe reproduction and expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Share redacted commands, outputs, and relevant test results.
+    validations:
+      required: true

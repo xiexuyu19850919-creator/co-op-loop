@@ -1,0 +1,4 @@
+interface:
+  display_name: "CO-OP Loop"
+  short_description: "Governed cross-thread collaboration loop"
+  default_prompt: "Use $co-op-loop to bootstrap and run a governed consultant-control collaboration loop."

@@ -1,0 +1,27 @@
+# Local Loop state and reports
+.coop-loop/
+**/.coop-loop/
+reports/
+**/reports/
+
+# Python cache and temporary files
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Local credentials and editor state
+.env
+.env.*
+.venv/
+venv/
+.idea/
+.vscode/
+
+# Local verification metadata
+.git-verify/

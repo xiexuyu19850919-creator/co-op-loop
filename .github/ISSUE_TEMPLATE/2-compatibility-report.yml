@@ -1,0 +1,31 @@
+name: Compatibility report
+description: Report behavior on a host or project shape
+title: "[Compatibility]: "
+labels:
+  - compatibility
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report only redacted, non-sensitive evidence. Other hosts are unverified until tested.
+  - type: input
+    id: host
+    attributes:
+      label: Host
+      description: Name and version of the host environment.
+    validations:
+      required: true
+  - type: textarea
+    id: project_shape
+    attributes:
+      label: Project shape
+      description: Describe the relevant storage or governance shape without private paths.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: Include the expected result, observed result, and redacted evidence.
+    validations:
+      required: true
