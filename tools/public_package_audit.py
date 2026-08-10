@@ -16,7 +16,7 @@ from typing import Any
 
 PUBLIC_FILES = (
     "README.md",
-    "README.zh-CN.md",
+    "README.en.md",
     "LICENSE",
     "VERSION",
     "CHANGELOG.md",
@@ -122,7 +122,7 @@ def _patterns() -> tuple[tuple[str, re.Pattern[str]], ...]:
 
 
 def _is_allowed_protocol_reference(relative_path: str, line: str, match: str) -> bool:
-    if relative_path in {"README.md", "README.zh-CN.md"} and match == ".coop-loop/state.yaml":
+    if relative_path in {"README.md", "README.en.md"} and match == ".coop-loop/state.yaml":
         return True
     if relative_path == ".gitignore" and ("pycache" in line or ".pyc" in line or ".pyo" in line):
         return True
