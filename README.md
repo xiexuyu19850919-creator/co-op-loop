@@ -110,14 +110,17 @@ src/
 将 `co-op-loop/` 目录复制到宿主本地 Skill 目录后，先验证复制的目录再使用。
 宿主路径因环境而异，不要在仓库中公开个人路径。
 
-典型的本机验证会关闭 Python 字节码写入：
+典型的本机验证会关闭 Python 字节码写入。`<path-to-co-op-loop>` 必须替换为复制后的
+exact runtime 目录：
 
 ```powershell
 $env:PYTHONDONTWRITEBYTECODE = "1"
 $env:PYTHONUTF8 = "1"
-python -X utf8 -B scripts/quick_validate.py <path-to-co-op-loop>
 python -X utf8 -B <path-to-co-op-loop>/scripts/scenario_tests.py
 ```
+
+如果宿主提供 Skill Creator，可额外调用宿主自带的 `quick_validate.py` 校验 runtime；
+它不是本仓库脚本，路径由宿主决定，仅作为可选检查。
 
 升级前先比较源码与目标文件，只替换由当前安装方拥有的运行时 Skill。卸载前必须
 满足宿主自身的所有权与回滚规则。本仓库不因本地验证自动授权删除、迁移或外部同步。

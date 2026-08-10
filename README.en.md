@@ -126,14 +126,18 @@ Copy the `co-op-loop/` directory into the host's local Skill directory, then
 validate the copied directory before using it. The exact host path is
 environment-specific; do not publish a personal path in a repository.
 
-Typical local validation uses Python with bytecode disabled:
+Typical local validation uses Python with bytecode disabled. Replace
+`<path-to-co-op-loop>` with the exact copied runtime directory:
 
 ```powershell
 $env:PYTHONDONTWRITEBYTECODE = "1"
 $env:PYTHONUTF8 = "1"
-python -X utf8 -B scripts/quick_validate.py <path-to-co-op-loop>
 python -X utf8 -B <path-to-co-op-loop>/scripts/scenario_tests.py
 ```
+
+If the host provides Skill Creator, you may additionally use the host's own
+`quick_validate.py` to validate the runtime. It is not a repository script;
+its path is host-defined and the check is optional.
 
 Upgrade by replacing only an owned runtime Skill after comparing the source
 and destination files. Uninstall by removing the installed copy only after
