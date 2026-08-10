@@ -12,29 +12,28 @@ RED 审计、执行证据和回读收口放进一个可复核的最小协议里�
 `v0.2.0` Release 已存在。当前验证证据覆盖本地 Codex 与 Windows 公开
 clone canary；Claude、其他宿主和其他操作系统仍是**未验证**。
 
-## Why it exists
+## 它解决什么问题
 
-Automation can reduce mechanical work while making people feel like a manual
-API. A plan is still easy to misunderstand, a permission boundary can be
-silently widened, and a green-looking response can hide missing evidence.
-CO-OP Loop keeps those risks visible with a small protocol:
+自动化可以减少机械劳动，却也可能让人感觉自己成了人工 API。计划仍然可能被
+误解，权限边界可能被悄悄扩大，而看似成功的回复也可能缺少完成证据。CO-OP Loop
+用小而清晰的协议、角色和证据链，让这些摩擦保持可见：
 
-- a consultant receives the user's business request and maintains the plan;
-- a control task performs the authorized work;
-- a one-time business task is used only for a concrete action after closeout,
-  when the user selects it and all gates remain satisfied.
+- 顾问接收用户的业务请求并维护计划；
+- 中控任务执行已经获得授权的工作；
+- 一次性业务任务只用于收口后的具体业务动作，并且只有在用户选择它、所有门禁
+  仍然满足时才会执行。
 
 ```mermaid
 flowchart TD
-    A[User request] --> B[Consultant plan]
-    B --> C[Exact plan confirmation]
-    C --> D[Bounded RED review]
-    D --> E{Gates clear?}
-    E -- no --> F[Pause with evidence]
-    E -- yes --> G[Control task execution]
-    G --> H[Report and readback]
-    H --> I[Consultant evaluation]
-    I --> J[Closeout or one-time business route]
+    A[用户请求] --> B[顾问计划]
+    B --> C[精确计划确认]
+    C --> D[有界 RED]
+    D --> E{门禁判断}
+    E -- 否 --> F[带证据暂停]
+    E -- 是 --> G[中控执行]
+    G --> H[报告与回读]
+    H --> I[顾问评估]
+    I --> J[收口或一次性业务路由]
 ```
 
 ## 触发与首次使用
