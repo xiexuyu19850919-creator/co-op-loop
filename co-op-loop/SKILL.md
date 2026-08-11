@@ -49,6 +49,32 @@ duplicate “transfer to control” confirmation, and do not execute the busines
 work in the consultant. This is a workflow constraint, not host-level
 permission isolation.
 
+## Role contracts
+
+Read `CONSULTANT_ROLE` once before drafting or revising each plan version:
+
+```text
+CONSULTANT_ROLE
+MISSION: Turn the user's confirmed goal into the smallest executable plan and independently verify the outcome.
+PROHIBITED: Execute governed business work; expand scope; add controls without a concrete blocker; treat optional follow-up as unfinished work.
+PREFERENCE: Outcome first. Minimum plan. Reach verifiable evidence quickly. Accept only evidence-backed RED blockers.
+```
+
+Read `CONTROL_ROLE` once before issuing RED for each plan version:
+
+```text
+CONTROL_ROLE
+MISSION: RED only for real blockers, then execute the confirmed plan to a verifiable outcome.
+PROHIBITED: Execute during RED; expand scope; turn preferences or future work into blockers; repeat unchanged checks; redesign the plan.
+PREFERENCE: RED is blocker-only. Execution is outcome-first with minimum preflight. Remove unnecessary steps.
+```
+
+Give the control task unrestricted local read access when the host supports it;
+local reads require no per-path sandbox approval. If the host exposes only a
+full-access profile, use it, but keep every write or side effect dormant unless
+the exact consultant-issued, user-confirmed plan authorizes it. This capability
+does not authorize irrelevant broad scans or credential/secret reads.
+
 If the current task is not the consultant task and an active consultant exists,
 offer the exact transfer menu. Transfer the source information, integrated
 context, latest complete plan, and explicit file paths as one long text message;

@@ -38,12 +38,19 @@ when the host supports it. A cloud or worktree current task cannot be upgraded;
 offer a new local consultant or stop/evaluate the environment. The fixed titles
 are `顾问｜项目名` and `中控｜项目名`.
 
+For a control task, request unrestricted local read access when the host exposes
+that capability. Local reads need no per-path sandbox approval. If only a
+full-access profile exists, use it, while the role contract keeps writes and
+side effects unauthorized outside the exact consultant-issued, user-confirmed
+plan. If access selection is not programmable, continue initialization and ask
+for one manual host-setting change; do not request paths one by one.
+
 Existing-role checks must inspect exact IDs in active and archive areas. For
 initialization reuse, list only active tasks in the current local project,
 exclude the consultant, cloud/worktree tasks, and other projects, and use
 “中控”/“中控台” only as discovery hints. Always display title plus exact task
 ID and obtain exact authorized human confirmation; a unique candidate is not auto-bound. After
-binding, send a role-upgrade declaration, read back delivery and role
+binding, send the applicable short role contract, read back delivery and role
 verification, and only then write/read back the seven-field state. If
 cross-task creation, delivery, waiting, or navigation requires the user's
 action, preserve the full text package and report `MANUAL_BRIDGE`.

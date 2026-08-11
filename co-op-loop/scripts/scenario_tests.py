@@ -28,7 +28,9 @@ PHASES = {"INITIALIZING", "READY", "RED", "EXECUTION", "REVIEW", "WAITING_USER",
 TRIGGERS = {"loop", "/loop", "$loop", "$co-op-loop"}
 TERMINAL_NEXT = {"ENDED", "PLAN_DISPLAYED", "DIRECTION_REQUESTED"}
 EXECUTION_STATUSES = {"EXECUTION_COMPLETE", "EXECUTION_PAUSED", "EXECUTION_FAILED"}
+SKILL_PATH = Path(__file__).resolve().parents[1] / "SKILL.md"
 PROTOCOL_PATH = Path(__file__).resolve().parents[1] / "references" / "loop-protocol.md"
+HOST_ADAPTATION_PATH = PROTOCOL_PATH.parent / "host-adaptation.md"
 STORAGE_REFERENCE_PATH = Path(__file__).resolve().parents[1] / "references" / "storage-adaptation.md"
 STORAGE_SCRIPT_PATH = Path(__file__).resolve().parent / "storage_preflight.py"
 
@@ -166,8 +168,11 @@ def role_upgrade_binding_ready(*, exact_id_known: bool, declaration_delivered: b
     return exact_id_known and declaration_delivered and role_verified
 
 
-def role_upgrade_declaration(thread_id: str) -> str:
-    return f"COOP_ROLE_UPGRADE target_thread_id: {thread_id}; old context is historical material only; no current plan or execution authorization is inherited."
+def role_upgrade_declaration(thread_id: str, role: str = "CONTROL") -> str:
+    return (
+        f"COOP_ROLE_UPGRADE target_thread_id: {thread_id}; old context is historical material only; "
+        f"no current plan or execution authorization is inherited; role_contract: {role}_ROLE."
+    )
 
 
 def business_route(*, business_request: bool, control_status: str, plan_confirmed: bool, red_passed: bool, high_risk_cleared: bool, stop_conditions_clear: bool) -> dict[str, Any]:
@@ -704,6 +709,26 @@ class FinalContractScenarios(unittest.TestCase):
         self.assertIn("control-1", declaration)
         self.assertIn("historical material only", declaration)
         self.assertIn("no current plan or execution authorization", declaration)
+
+    def test_short_role_contracts_and_read_timing(self) -> None:
+        skill = SKILL_PATH.read_text(encoding="utf-8")
+        protocol = PROTOCOL_PATH.read_text(encoding="utf-8")
+        for marker in ("CONSULTANT_ROLE", "CONTROL_ROLE", "MISSION:", "PROHIBITED:", "PREFERENCE:"):
+            self.assertIn(marker, skill)
+        self.assertIn("smallest executable plan", skill)
+        self.assertIn("RED is blocker-only", skill)
+        self.assertIn("Before drafting or revising each plan version", protocol)
+        self.assertIn("Before issuing RED for that plan version", protocol)
+        self.assertIn("Do not repeat the role read per message", protocol)
+
+    def test_control_host_access_separates_read_capability_from_write_authority(self) -> None:
+        skill = SKILL_PATH.read_text(encoding="utf-8")
+        adapter = " ".join(HOST_ADAPTATION_PATH.read_text(encoding="utf-8").split())
+        self.assertIn("unrestricted local read access", skill)
+        self.assertIn("no per-path sandbox approval", skill)
+        self.assertIn("writes and side effects unauthorized", adapter)
+        self.assertIn("user-confirmed", adapter)
+        self.assertIn("do not request paths one by one", adapter)
 
     def test_consultant_business_request_routes_without_bypassing_gates(self) -> None:
         self.assertEqual(

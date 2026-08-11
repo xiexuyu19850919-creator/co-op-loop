@@ -167,6 +167,10 @@ uses the fixed title `顾问｜项目名`, receives the integrated current conte
 and uses the adapter's best-effort consultant model recommendation. Model
 failure does not block initialization.
 
+For either creation or upgrade, send the short `CONSULTANT_ROLE` contract from
+`SKILL.md` and verify it with the exact task ID. Do not add role fields to the
+seven-field state.
+
 ### 4. Control source
 
 After consultant creation or upgrade, show:
@@ -195,11 +199,12 @@ show:
 2. 取消本次初始化
 ```
 
-After exact ID confirmation, send a role-upgrade declaration to the target. The
-declaration preserves its old context as historical material only; it does not
-make an old plan or execution authorization current. Only after the exact ID is
-known, the declaration is delivered, and the target role is read back as
-verified, write the seven-field state and read it back immediately.
+For either a new or reused control, send the short `CONTROL_ROLE` contract from
+`SKILL.md` with the exact task ID. A reuse declaration preserves old context as
+historical material only; it does not make an old plan or execution
+authorization current. Only after the exact ID is known, the declaration is
+delivered, and the target role is read back as verified, write the seven-field
+state and read it back immediately.
 
 ### 5. Initialization complete
 
@@ -296,6 +301,10 @@ After arrival, do not inherit an active phase: require a new standalone `loop`.
 
 ## Plan and RED
 
+Before drafting or revising each plan version, the consultant reads
+`CONSULTANT_ROLE` once. Do not repeat this read for ordinary messages within the
+same version.
+
 After initialization or an existing aligned check, `loop` retrieves and displays
 the latest complete plan, followed by:
 
@@ -312,9 +321,11 @@ the latest plan again. A sentence, `确认`, or a second `loop` does not authori
 RED.
 
 The RED package is one long text containing governance background, the complete
-plan, and any added instructions for the control task. During RED, the control
-task audits only; it does not execute, generate process files, or create
-business outputs. The consultant waits silently except for required redelivery.
+plan, the short `CONTROL_ROLE` contract, and any added instructions for the
+control task. Before issuing RED for that plan version, the control reads the
+contract once. During RED, it audits only; it does not execute, generate process
+files, or create business outputs. Do not repeat the role read per message. The
+consultant waits silently except for required redelivery.
 
 Every plan that can be selected or executed must contain one `BEGIN_PLAN_TEXT`
 and one `END_PLAN_TEXT` marker pair. To calculate
