@@ -39,8 +39,10 @@ consultant selection/creation, control-source selection, role-declaration
 verification, then initialization-complete choice. After the consultant is
 ready, choose new local control or search/reuse an active local control in this
 project. Use fixed titles `顾问｜项目名` and `中控｜项目名`; create only local
-tasks in the saved project, never cloud or worktree. Model recommendations are
-best-effort adapter hints, not protocol fields or initialization gates.
+tasks in the saved project, never cloud or worktree. New-task defaults are
+`Sol High` or higher for consultant and `Luna Max` (`最高`) for control and
+one-time business. Request the default at creation and report the selected
+model/reasoning afterward; this remains best-effort and non-blocking.
 
 The consultant is the user's default business entry. If a business plan request
 arrives in the consultant task, route it to the exact bound control task after

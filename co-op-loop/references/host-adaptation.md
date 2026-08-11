@@ -87,9 +87,20 @@ snapshot. Other hosts remain unverified until a supported-environment test.
 
 ## Models
 
-The Codex adapter may recommend `Sol High` for consultant and `Luna Max` for
-control, but these are optional best-effort settings. If the consultant model
-cannot be switched automatically, show:
+Use these best-effort defaults for newly created tasks:
+
+- consultant: `Sol High` or higher;
+- control: `Luna Max` (`最高` in Chinese UI);
+- one-time business: `Luna Max` (`最高` in Chinese UI).
+
+Request the applicable default during creation. After creation, check the
+selected values and report:
+
+```text
+已选择“<模型名称> <推理等级>”创建<任务标题>。
+```
+
+If the consultant model cannot be switched automatically, show:
 
 ```text
 顾问任务推荐使用 Sol High 或更高模式，当前暂时无法自动为您切换，请你人工切换模型类型。
@@ -97,9 +108,8 @@ cannot be switched automatically, show:
 
 If the control model cannot be selected, tell the user that `Luna Max` (shown
 as `最高` in Chinese UI) is recommended and must be checked manually. The core
-protocol must not use model
-names as fields, identities, or initialization gates. Model failure never
-blocks initialization.
+protocol must not use model names as fields, identities, or initialization
+gates. Model failure never blocks initialization.
 
 ## Text fallback and safety
 

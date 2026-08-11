@@ -1651,6 +1651,8 @@ class StorageAdaptationScenarios(unittest.TestCase):
         adaptation = (PROTOCOL_PATH.parent / "host-adaptation.md").read_text(encoding="utf-8")
         self.assertIn("Luna Max", adaptation)
         self.assertIn("Model failure never", adaptation)
+        self.assertIn("one-time business: `Luna Max`", adaptation)
+        self.assertIn('已选择“<模型名称> <推理等级>”创建<任务标题>。', adaptation)
 
 
 if __name__ == "__main__":

@@ -164,8 +164,8 @@ For a local saved project, show:
 If the current task is cloud or worktree, do not offer upgrade; offer a new
 local consultant, stop and evaluate the environment, or stop. A new consultant
 uses the fixed title `顾问｜项目名`, receives the integrated current context,
-and uses the adapter's best-effort consultant model recommendation. Model
-failure does not block initialization.
+requests `Sol High` or higher at creation, and reports the selected
+model/reasoning afterward. Model failure does not block initialization.
 
 For either creation or upgrade, send the short `CONSULTANT_ROLE` contract from
 `SKILL.md` and verify it with the exact task ID. Do not add role fields to the
@@ -183,7 +183,9 @@ After consultant creation or upgrade, show:
 ```
 
 Choice 1 creates one new local task in the saved project with fixed title
-`中控｜项目名`. Choice 3 enters the cancellation confirmation below.
+`中控｜项目名`, requests `Luna Max` (`最高`) at creation, and reports the
+selected model/reasoning afterward. Choice 3 enters the cancellation
+confirmation below.
 
 Choice 2 searches only active tasks in the current saved local project. Exclude
 the consultant task, cloud/worktree tasks, and tasks from other projects.
@@ -502,6 +504,8 @@ fixed title `业务 | 运行任务名称`, where `运行任务名称` is the act
 name, not the default project name. The business task is only an execution
 target; it is not the consultant or control role and its ID must not be written
 to `consultant_thread_id` or `control_thread_id` in the seven-field state.
+Request `Luna Max` (`最高`) at creation and report the selected model/reasoning
+afterward.
 After either choice, the consultant generates the minimum next plan, obtains
 the normal plan confirmation, completes required RED, high-risk permission,
 and stop-condition gates, then sends the package to the selected target,
