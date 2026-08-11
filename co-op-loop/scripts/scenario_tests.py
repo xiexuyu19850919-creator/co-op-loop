@@ -141,7 +141,12 @@ def model_switch_prompt(role: str, switched: bool) -> str:
 
 
 def control_source_choices() -> tuple[str, ...]:
-    return ("新建一个本地中控台任务", "查找并复用本项目已有的“中控”任务，升级为本 Loop 的中控台", "取消本次初始化")
+    return (
+        "新建一个本地中控台任务",
+        "查找并复用本项目已有的“中控”任务，升级为本 Loop 的中控台",
+        "通过任务线程 ID 指定并升级为中控台任务",
+        "取消本次初始化",
+    )
 
 
 def eligible_control_candidates(candidates: list[Mapping[str, Any]], *, consultant_id: str, project_root: str) -> list[Mapping[str, Any]]:
@@ -683,9 +688,13 @@ class FinalContractScenarios(unittest.TestCase):
             (
                 "新建一个本地中控台任务",
                 "查找并复用本项目已有的“中控”任务，升级为本 Loop 的中控台",
+                "通过任务线程 ID 指定并升级为中控台任务",
                 "取消本次初始化",
             ),
         )
+        protocol = PROTOCOL_PATH.read_text(encoding="utf-8")
+        self.assertIn("请发送需要指定的完整任务线程 ID。", protocol)
+        self.assertIn("Only exact `1` confirms the upgrade", protocol)
         candidates = [
             {"thread_id": "consultant", "title": "中控顾问", "status": "active", "environment": "local", "project_root": "D:/project"},
             {"thread_id": "control-1", "title": "项目中控", "status": "active", "environment": "local", "project_root": "D:/project"},

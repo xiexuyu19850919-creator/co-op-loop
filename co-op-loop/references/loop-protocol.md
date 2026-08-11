@@ -179,12 +179,13 @@ After consultant creation or upgrade, show:
 顾问任务已经就绪。接下来请选择中控台任务的来源：
 1. 新建一个本地中控台任务
 2. 查找并复用本项目已有的“中控”任务，升级为本 Loop 的中控台
-3. 取消本次初始化
+3. 通过任务线程 ID 指定并升级为中控台任务
+4. 取消本次初始化
 ```
 
 Choice 1 creates one new local task in the saved project with fixed title
 `中控｜项目名`, requests `Luna Max` (`最高`) at creation, and reports the
-selected model/reasoning afterward. Choice 3 enters the cancellation
+selected model/reasoning afterward. Choice 4 enters the cancellation
 confirmation below.
 
 Choice 2 searches only active tasks in the current saved local project. Exclude
@@ -198,8 +199,35 @@ show:
 ```text
 未找到可复用的本地中控任务，你可以：
 1. 新建一个本地中控台任务
-2. 取消本次初始化
+2. 通过任务线程 ID 指定并升级为中控台任务
+3. 取消本次初始化
 ```
+
+Choice 3 in the source menu and choice 2 in the no-result menu show:
+
+```text
+请发送需要指定的完整任务线程 ID。
+```
+
+Treat the supplied ID as a candidate, not confirmation. It need not contain a
+“中控” title keyword. Verify that it is a non-archived, non-deleted local task
+in the current saved project and is not the consultant, then show:
+
+```text
+检测到以下本地任务：
+任务：<title>
+Task ID：<thread_id>
+所属项目：<project_name>
+状态：<status>
+
+是否将其升级为本 Loop 的中控台任务？
+1. 确认升级
+2. 返回上一步
+```
+
+Only exact `1` confirms the upgrade and permits the control declaration. Exact
+`2` returns to the control-source menu. If the task cannot be verified, report
+that result and return to the same menu without binding it.
 
 For either a new or reused control, send the short `CONTROL_ROLE` contract from
 `SKILL.md` with the exact task ID. A reuse declaration preserves old context as
