@@ -2,6 +2,13 @@
 
 All notable changes to the public candidate are documented here.
 
+## Unreleased
+
+- accept filesystem-equivalent project-root aliases without weakening genuine
+  `project_root_mismatch` blocking;
+- add focused alias regression coverage and cross-platform validation guidance;
+- add a Windows, macOS, and Ubuntu compatibility workflow.
+
 ## [0.2.0] - 2026-08-10
 
 Candidate preparation:

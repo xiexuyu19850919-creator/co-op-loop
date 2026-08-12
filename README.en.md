@@ -125,6 +125,8 @@ src/
 Copy the `co-op-loop/` directory into the host's local Skill directory, then
 validate the copied directory before using it. The exact host path is
 environment-specific; do not publish a personal path in a repository.
+The current script baseline is Python 3.9 or newer and uses only the Python
+standard library.
 
 Typical local validation uses Python with bytecode disabled. Replace
 `<path-to-co-op-loop>` with the exact copied runtime directory:
@@ -133,6 +135,13 @@ Typical local validation uses Python with bytecode disabled. Replace
 $env:PYTHONDONTWRITEBYTECODE = "1"
 $env:PYTHONUTF8 = "1"
 python -X utf8 -B <path-to-co-op-loop>/scripts/scenario_tests.py
+```
+
+macOS/Linux POSIX shell:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONUTF8=1 \
+python3 -X utf8 -B <path-to-co-op-loop>/scripts/scenario_tests.py
 ```
 
 If the host provides Skill Creator, you may additionally use the host's own

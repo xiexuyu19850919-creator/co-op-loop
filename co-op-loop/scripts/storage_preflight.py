@@ -130,6 +130,15 @@ def _key(path: Path) -> str:
     return os.path.normcase(os.path.normpath(str(path)))
 
 
+def _same_existing_path(left: Path, right: Path) -> bool:
+    if _key(left) == _key(right):
+        return True
+    try:
+        return _key(left.resolve(strict=True)) == _key(right.resolve(strict=True))
+    except (OSError, RuntimeError):
+        return False
+
+
 def _absolute(root: Path, raw: str) -> Path | None:
     value = raw.strip().strip("`'\"<>()[]{}|\n\r\t")
     value = value.rstrip(".,;:")
@@ -592,7 +601,7 @@ def _parse_state(path: Path, root: Path) -> tuple[bool, dict[str, Any] | None, s
     declared_root = Path(str(values["project_root"]).replace("\\", os.sep))
     if not declared_root.is_absolute():
         declared_root = root / declared_root
-    if _key(declared_root) != _key(root):
+    if not _same_existing_path(declared_root, root):
         return False, values, "project_root_mismatch"
     return True, values, None
 

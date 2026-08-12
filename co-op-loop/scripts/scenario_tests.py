@@ -552,11 +552,12 @@ def write_valid_state(root: Path, relative: str, *, phase: str = "ENDED", red_co
 def controlled_temp_initialization(root: Path, *, strict: bool = False) -> dict[str, Any]:
     result = run_storage_preflight(root, "simulate-first-init")
     assert result["task_creation_allowed"]
+    canonical_root = Path(result["project_root"])
     state_path = Path(result["resolved_state_path"])
     report_root = Path(result["resolved_report_root"])
     state_path.parent.mkdir(parents=True, exist_ok=True)
     report_root.mkdir(parents=True, exist_ok=True)
-    write_valid_state(root, str(state_path.relative_to(root)))
+    write_valid_state(canonical_root, str(state_path.relative_to(canonical_root)))
     (report_root / "execution.md").write_text("temporary controlled report\n", encoding="utf-8")
     if not strict:
         (state_path.parent / ".gitignore").write_text("*\n", encoding="utf-8")
@@ -1186,6 +1187,37 @@ class StorageAdaptationScenarios(unittest.TestCase):
                 self.assertEqual(Path(result["resolved_state_path"]), legacy.resolve())
                 self.assertFalse((root / ".agents").exists())
                 self.assertFalse((root / ".codex").exists())
+
+    def test_state_project_root_accepts_only_a_resolved_alias(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="coop-root-alias-") as raw:
+            parent = Path(raw)
+            root = parent / "project"
+            root.mkdir()
+            alias = parent / "project-alias"
+            try:
+                alias.symlink_to(root, target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest("directory symlink unavailable in this environment")
+
+            state = write_valid_state(alias, ".coop-loop/state.yaml", phase="READY", red_count=0)
+            accepted = run_storage_preflight(root)
+            self.assertEqual(accepted["classification"], "LEGACY")
+            self.assertTrue(accepted["task_creation_allowed"])
+            self.assertEqual(Path(accepted["resolved_state_path"]), state.resolve())
+
+            different = parent / "different-project"
+            different.mkdir()
+            state.write_text(
+                state.read_text(encoding="utf-8").replace(
+                    f"project_root: {alias}",
+                    f"project_root: {different}",
+                ),
+                encoding="utf-8",
+            )
+            rejected = run_storage_preflight(root)
+            self.assertEqual(rejected["classification"], "BLOCKED")
+            self.assertFalse(rejected["task_creation_allowed"])
+            self.assertEqual(rejected["damaged_states"][0]["reason"], "project_root_mismatch")
 
     def test_damaged_and_multiple_damaged_states_stop(self) -> None:
         with tempfile.TemporaryDirectory(prefix="coop-damaged-") as raw:

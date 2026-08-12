@@ -31,6 +31,7 @@ PUBLIC_FILES = (
     ".github/ISSUE_TEMPLATE/3-feature-request.yml",
     ".github/ISSUE_TEMPLATE/config.yml",
     ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/workflows/compatibility.yml",
     "co-op-loop/SKILL.md",
     "co-op-loop/agents/openai.yaml",
     "co-op-loop/references/host-adaptation.md",
@@ -49,6 +50,7 @@ EXPECTED_DIRS = {
     "tools",
     ".github",
     ".github/ISSUE_TEMPLATE",
+    ".github/workflows",
 }
 
 

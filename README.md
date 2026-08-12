@@ -109,6 +109,7 @@ src/
 
 将 `co-op-loop/` 目录复制到宿主本地 Skill 目录后，先验证复制的目录再使用。
 宿主路径因环境而异，不要在仓库中公开个人路径。
+当前脚本基线为 Python 3.9 或更高版本，仅使用 Python 标准库。
 
 典型的本机验证会关闭 Python 字节码写入。`<path-to-co-op-loop>` 必须替换为复制后的
 exact runtime 目录：
@@ -117,6 +118,13 @@ exact runtime 目录：
 $env:PYTHONDONTWRITEBYTECODE = "1"
 $env:PYTHONUTF8 = "1"
 python -X utf8 -B <path-to-co-op-loop>/scripts/scenario_tests.py
+```
+
+macOS/Linux POSIX shell：
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONUTF8=1 \
+python3 -X utf8 -B <path-to-co-op-loop>/scripts/scenario_tests.py
 ```
 
 如果宿主提供 Skill Creator，可额外调用宿主自带的 `quick_validate.py` 校验 runtime；
